@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<title>Plain Text Accounting</title>
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 		<script>
 			var link = document.createElement( 'link' );
@@ -18,39 +18,56 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+		<style>
+			.reveal h1 {
+				line-height: 0.9em;
+			}
+			.reveal .ledger {
+				padding: 20px;
+				background-color: black;
+				color: white;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
+				<section data-background="images/pexels-photo-164686_2.jpeg">
 					<h1>Plain Text Accounting</h1>
-					<h3>Accounting for power users</h3>
+					<h2>Accounting for power users</h2>
 					<p><small>
-						<a href="mailto:pfsmorigo@gmail.com">Paulo Flabiano Smorigo</a><br/>
-						<a href="http://twitter.com/pfsmorigo">@pfsmorigo</a>
+						<a href="mailto:pfsmorigo@gmail.com" style="color: white">Paulo Flabiano Smorigo</a><br/>
+						<a href="http://twitter.com/pfsmorigo" style="color: white">@pfsmorigo</a>
 					</small></p>
 				</section>
 
 				<section>
-					<h2>What we are going to talk about?</h2>
+					<h2>Disclaimer</h2>
+					<p>We are talking about using terminal and edit text files manually (with some helpers). If you are not confortable, or doesn't like it, maybe this is not suitable for you. At first sight, it might be stupid and not practical but you will be surprised on how the system works well.</p>
+				</section>
+
+				<section>
+					<h2>What we're going to talk about?</h2>
 					<ul>
-						<li>Accounting itself</li>
-						<li>Tools to help achieve it</li>
-						<li>Best practices</li>
+						<li><span style="color: cyan">Part 1:</span> Double-entry bookkeeping system</li>
+						<li><span style="color: cyan">Part 2:</span> Plain Text Accounting</li>
+						<li><span style="color: cyan">Part 3:</span> Hands-on with ledger-cli</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>Disclaimer</h2>
-					<p>We are talking about using terminal and edit text files manually (with some helper). If you are not confortable, or doesn't like it, maybe this is not suitable for you. At first sight, it might be stupid and not practical but you will be surprised on how the system works well.</p>
-				</section>
-
-				<section>
 					<section>
-						<h2>Accounting</h2>
+						<h2 style="color: cyan">Part 1</h2>
+						<p>Double-entry bookkeeping system</p>
+					</section>
+
+					<section>
+						<h2>Double-entry bookkeeping system</h2>
 						<ul>
-							<li>Double-entry bookkeeping system</li>
+							<li>Values are transfered from one account to another</li>
+							<li>All accounts must balance to zero (error check)</li>
+							<li>Accounting equation approach</li>
 						</ul>
 					</section>
 
@@ -151,56 +168,92 @@
 
 					<section>
 						<h2>Double-entry</h2>
-						<pre><code class="text" data-trim contenteditable>
-2017-09-02 Paycheck    Bank          $1000
-                       Company      $-1000
+						<pre class="ledger">$ ledger -f examples/ex1.ledger register
 
-2017-09-06 Fuel        Fuel           $150
-                       Bank          $-150
-
-2017-09-06 Groceries   Market         $150
-                       Bank          $-150
-
-2017-09-06 Rent        House          $500
-                       Bank          $-500
-						</code></pre>
+    2017-09-02 Paycheck    Bank           $1000    $1000
+                           Company       $-1000        0
+    2017-09-06 Fuel        Fuel            $150     $150
+                           Bank           $-150        0
+    2017-09-06 Groceries   Market          $150     $150
+                           Bank           $-150        0
+    2017-09-06 Rent        House           $500     $500
+                           Bank           $-500        0
+						</pre>
 					</section>
 
 					<section>
 						<h2>Must balance to zero</h2>
-						<pre><code class="text" data-trim contenteditable>
-                $200  Bank
-              $-1000  Company
-                $150  Fuel
-                $500  House
-                $150  Market
---------------------
-                   0
-						</code></pre>
+						<pre class="ledger">$ ledger -f examples/ex1.ledger balance
+
+                    $200  Bank
+                  $-1000  Company
+                    $150  Fuel
+                    $500  House
+                    $150  Market
+    --------------------
+                       0
+						</pre>
+					</section>
+
+					<section>
+						<h2>American approach</h2>
+						<ul>
+							<li>Assets (bank accounts, meal ticket, ...)</li>
+							<li>Equity (car, house, ...)</li>
+							<li>Liabilities (credit card, ...)</li>
+							<li>Income (salary, ...)</li>
+							<li>Expenses (expenses :P)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Accounts hierarchy</h2>
+							<pre class="ledger" style="width:30%">
+Assets
+ ├── Checking
+ ├── Savings
+ └── Meal Ticket
+Equity
+ └── Opening Balances
+Liabilities
+ └── Credit Card
+Income
+ ├── Salary
+ └── Others
+Expenses
+ ├── Auto
+ ├── Market
+ └── House
+						</pre>
+					</section>
+
+					<section>
+						<h2>Must balance to zero (v2)</h2>
+						<pre class="ledger">$ ledger -f examples/ex2.ledger balance
+
+                    $200  Assets:Checking
+                    $800  Expenses
+                    $150    Auto
+                    $500    House
+                    $150    Market
+                  $-1000  Income:Salary
+    --------------------
+                       0
+						</pre>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h2>Vertical Slides</h2>
-						<p>Slides can be nested inside of each other.</p>
-						<p>Use the <em>Space</em> key to navigate through all slides.</p>
-						<br>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
+						<h2 style="color: cyan">Part 2</h2>
+						<p>Plain Text Accounting</p>
 					</section>
+				</section>
+
+				<section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>That's it, time to go back up.</p>
-						<br>
-						<a href="#/2">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-						</a>
+						<h2 style="color: cyan">Part 3</h2>
+						<p>Hands-on with ledger-cli</p>
 					</section>
 				</section>
 
@@ -514,8 +567,9 @@ Reveal.addEventListener( 'customevent', function() {
 				progress: true,
 				history: true,
 				center: true,
-
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
+				transitionSpeed: 'fast', // default/fast/slow
+				pdfMaxPagesPerSlide: 1,
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
