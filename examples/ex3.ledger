@@ -1,0 +1,17 @@
+2017-09-02 * Paycheck
+	Assets:Checking                    $1000
+	Income:Salary
+
+2017-09-06 * Fuel
+	Expenses:Auto                 40 GAS @ $3.75
+	Assets:Checking
+
+2017-09-06 ! Groceries
+	Expenses:Market                      $50  ; [=2017-10-10]
+	Expenses:Market                      $50  ; [=2017-11-10]
+	Expenses:Market                      $50  ; [=2017-12-10]
+	Assets:Checking
+
+2017-09-06=2017-09-09 Rent
+	Expenses:House                      $500
+	Assets:Checking

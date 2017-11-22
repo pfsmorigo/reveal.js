@@ -33,7 +33,7 @@
 			}
 			.reveal #config {
 				padding-top: 30px;
-				font-size: 15px;
+				font-size: 14px;
 				font-variant: small-caps;
 			}
 		</style>
@@ -77,7 +77,6 @@
 						<ul>
 							<li>Values are transfered from one account to another</li>
 							<li>All accounts must balance to zero (error check)</li>
-							<li>Accounting equation approach</li>
 						</ul>
 					</section>
 
@@ -299,18 +298,148 @@ Expenses
 						<h2>But why text?</h2>
 						<ul>
 							<li>It's valuable, be accessible for ever</li>
-							<li class="fragment">... even without software</li>
-							<li class="fragment">Easy to edit, search, organize, and...</li>
+							<li class="fragment">... even without a specific software</li>
+							<li class="fragment">Easy to edit, search and organize</li>
+							<li class="fragment">... as long as you are good with text editing</li>
+							<li class="fragment">Use your own security method (gpg, ecryptfs), and ...</li>
 							<li class="fragment">... you can version-control it! Hello git!</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>Vim vs Emacs</h2>
+						<h2>Editor support</h2>
 						<ul>
-							<li><a href="https://github.com/ledger/vim-ledger">vim-ledger</a></li>
-							<li><a href="http://ledger-cli.org/3.0/doc/ledger-mode.html">ledger-mode</a></li>
+							<li><a href="https://github.com/ledger/vim-ledger">vim-ledger</a> for Vim (recommended :P)</li>
+							<li><a href="http://ledger-cli.org/3.0/doc/ledger-mode.html">ledger-mode</a> for Emacs</li>
+							<li><a href="https://atom.io/packages/language-ledger">language-ledger</a> for Atom</li>
+							<li>Also for Sublime, TextMate, VisualStudio...
 						</ul>
+					</section>
+
+					<section>
+						<h2>Basic</h2>
+						<pre class="ledger">
+&lt;Date&gt; &lt;Description&gt;
+        &lt;Account:Sub-account&gt        &lt;Value&gt;
+        &lt;Account:Sub-account&gt        &lt;Value&gt;</pre>
+						<pre class="ledger fragment">
+2017-09-02 Paycheck
+        Assets:Checking                    $1000
+        Income:Salary                     $-1000</pre>
+						<pre class="ledger fragment">
+2017-09-02 Paycheck
+        Assets:Checking                    $1000
+        Income:Salary</pre>
+						<span class="fragment">Remember: balance to zero!</span>
+					</section>
+
+					<section>
+						<h2>Multiple accounts</h2>
+						<pre class="ledger">
+2017-03-31 Paycheck
+	Assets:Bank:Checking                  $1000
+	Expenses:Taxes:Federal                 $200
+	Expenses:Taxes:Syndicate                $50
+	Expenses:Medical                       $150
+	Income:Salary
+						</pre>
+					</section>
+
+					<section>
+						<h2>Clear / Pending</h2>
+						<pre class="ledger">
+2017-09-02 * Paycheck
+        Assets:Checking                    $1000
+        Income:Salary
+						</pre>
+						<pre class="ledger">
+2017-09-02 ! Paycheck
+        Assets:Checking                    $1000
+        Income:Salary
+						</pre>
+					</section>
+
+					<section>
+						<h2>Effective date</h2>
+						<pre class="ledger">
+2017-09-06=2017-09-09 Rent
+	Expenses:House                      $500
+	Assets:Checking
+						</pre>
+						<pre class="ledger">
+2017-09-06 Groceries
+	Expenses:Market                      $50  ; [=2017-10-10]
+	Expenses:Market                      $50  ; [=2017-11-10]
+	Expenses:Market                      $50  ; [=2017-12-10]
+	Assets:Checking
+						</pre>
+					</section>
+
+					<section>
+						<h2>Commodities and Currencies</h2>
+Cost per item
+						<pre class="ledger">
+2010-05-31 Market
+	Assets:Fridge                35 apples @ $0.42
+	Assets:Cash
+
+2010-05-31 Market
+	Assets:Fridge                35 apples {=$0.42}
+	Assets:Cash</pre>
+Total cost
+						<pre class="ledger">
+2010-05-31 Market
+	Assets:Fridge                35 apples @@ $14.70
+	Assets:Cash</pre>
+					</section>
+
+					<section>
+						<h2>Metadata</h2>
+						<pre class="ledger">
+2012-03-10 * KFC
+    Expenses:Food                $20.00
+    Assets:Cash
+      ; :TAG:
+
+2012-03-10 * KFC
+    Expenses:Food                $20.00
+    Assets:Cash
+      ; :TAG1:TAG2:TAG3:
+
+2012-03-10 * KFC
+    Expenses:Food                $20.00
+    Assets:Cash
+      ; MyTag: This is just a bogus value for MyTag
+						</pre>
+					</section>
+
+					<section>
+						<h2>Budgeting and Forecasting</h2>
+						<pre class="ledger">
+~ Monthly
+    Expenses:Rent               $500.00
+    Expenses:Food               $450.00
+    Expenses:Auto:Gas           $120.00
+    Expenses:Insurance          $150.00
+    Expenses:Phone              $125.00
+    Expenses:Utilities          $100.00
+    Expenses:Movies              $50.00
+    Expenses                    $200.00  ; all other expenses
+    Assets
+
+~ Yearly
+    Expenses:Auto:Repair        $500.00
+    Assets
+						</pre>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2 style="color: cyan">Part 3</h2>
+						<p>Hands-on with ledger-cli</p>
+						<p class="subtitle">Show me the code</p>
 					</section>
 
 					<section>
@@ -334,13 +463,47 @@ Expenses
         Assets:Checking
 						</pre>
 					</section>
+
+					<section>
+						<h2>More</h2>
+						<pre class="ledger">$ cat examples/ex3.ledger
+
+2017-09-02 * Paycheck
+	Assets:Checking                    $1000
+	Income:Salary
+
+2017-09-06 * Fuel
+	Expenses:Auto                 40 GAS @ $3.75
+	Assets:Checking
+
+2017-09-06 ! Groceries
+	Expenses:Market                      $50  ; [=2017-10-10]
+	Expenses:Market                      $50  ; [=2017-11-10]
+	Expenses:Market                      $50  ; [=2017-12-10]
+	Assets:Checking
+
+2017-09-06=2017-09-09 Rent
+	Expenses:House                      $500
+	Assets:Checking
+						</pre>
+					</section>
 				</section>
 
-				<section>
 					<section>
-						<h2 style="color: cyan">Part 3</h2>
-						<p>Hands-on with ledger-cli</p>
-						<p class="subtitle">Show me the code</p>
+						<h2>More</h2>
+						<pre class="ledger">$ ledger -f ex3.ledger -V --effective --sort date reg
+
+2017-09-02 Paycheck     Assets:Checking     $1000    $1000
+                        Income:Salary      $-1000        0
+2017-09-06 Fuel         Expenses:Auto        $150     $150
+                        Assets:Checking     $-150        0
+2017-09-06 Groceries    Assets:Checking     $-150    $-150
+2017-09-09 Rent         Expenses:House       $500     $350
+                        Assets:Checking     $-500    $-150
+2017-10-10 Groceries    Expenses:Market       $50    $-100
+2017-11-10 Groceries    Expenses:Market       $50     $-50
+2017-12-10 Groceries    Expenses:Market       $50        0
+						</pre>
 					</section>
 				</section>
 
