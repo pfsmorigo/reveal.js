@@ -443,7 +443,30 @@ Total cost
 					</section>
 
 					<section>
-						<h2>Format</h2>
+						<h2>Ledger-cli syntax</h2>
+						<pre class="ledger">$ ledger [command] [options] [arguments]
+         register  --begin
+         balance   --end
+         print     --period
+         ...       --effective
+         stats     --market
+         xml       --price-db
+         convert   --sort
+         ...       ...
+						</pre>
+Side note: Ledger will never alter your input file.
+					</section>
+
+					<section>
+						<h2>Common commands</h2>
+						<ul>
+							<li>register: List all postings matching query.</li>
+							<li>balance: Print a balance reports matching query.</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Example</h2>
 						<pre class="ledger">$ cat examples/ex2.ledger
 
 2017-09-02 Paycheck
@@ -465,7 +488,37 @@ Total cost
 					</section>
 
 					<section>
-						<h2>More</h2>
+						<h2>Example: register</h2>
+						<pre class="ledger">$ ledger -f examples/ex2.ledger reg
+
+2017-09-02 Paycheck     Assets:Checking      $1000    $1000
+                        Income:Salary       $-1000        0
+2017-09-06 Fuel         Expenses:Auto         $150     $150
+                        Assets:Checking      $-150        0
+2017-09-06 Groceries    Expenses:Market       $150     $150
+                        Assets:Checking      $-150        0
+2017-09-06 Rent         Expenses:House        $500     $500
+                        Assets:Checking      $-500        0
+						</pre>
+					</section>
+
+					<section>
+						<h2>Example: balance</h2>
+						<pre class="ledger">$ ledger -f examples/ex2.ledger bal
+
+                $200  Assets:Checking
+                $800  Expenses
+                $150    Auto
+                $500    House
+                $150    Market
+              $-1000  Income:Salary
+--------------------
+                   0
+						</pre>
+					</section>
+
+					<section>
+						<h2>Another example</h2>
 						<pre class="ledger">$ cat examples/ex3.ledger
 
 2017-09-02 * Paycheck
@@ -487,11 +540,10 @@ Total cost
 	Assets:Checking
 						</pre>
 					</section>
-				</section>
 
 					<section>
-						<h2>More</h2>
-						<pre class="ledger">$ ledger -f ex3.ledger -V --effective --sort date reg
+						<h2>Another example</h2>
+						<pre class="ledger">$ ledger --file ex3.ledger --market --effective --sort date reg
 
 2017-09-02 Paycheck     Assets:Checking     $1000    $1000
                         Income:Salary      $-1000        0
@@ -507,7 +559,25 @@ Total cost
 					</section>
 				</section>
 
+					<section>
+						<h2>Scripting</h2>
+						<ul>
+							<li>Itau case. Let's go...</li>
+						</ul>
+					</section>
+
+				</section>
+
 				<section>
+					<section>
+						<h2>References</h2>
+						<ul>
+							<li>This presentation<br /><a href="https://github.com/pfsmorigo/reveal.js/tree/pta">https://github.com/pfsmorigo/reveal.js/tree/pta</a></li>
+							<li>Ledger: Command-Line Accounting<br /><a href="http://ledger-cli.org/3.0/doc/ledger3.html">http://ledger-cli.org/3.0/doc/ledger3.html</a></li>
+							<li>Plain Text Accounting<br /><a href="http://plaintextaccounting.org/">http://plaintextaccounting.org/</a></li>
+							<li>Ledger CLI cheatsheet<br /><a href="https://devhints.io/ledger">https://devhints.io/ledger</a></li>
+					</section>
+
 					<section>
 						<h1>The End</h1>
 						<p>Thanks! Questions?</p>
