@@ -31,6 +31,13 @@
 				font-style: italic;
 				font-size: 0.6em;
 			}
+			.reveal #covertext {
+				font-style: italic;
+				font-size: 0.5em;
+			}
+			.reveal #license a {
+				color: white;
+			}
 			.reveal #config {
 				padding-top: 30px;
 				font-size: 14px;
@@ -45,10 +52,12 @@
 				<section data-background="images/pexels-photo-164686_2.jpeg">
 					<h1>Plain Text Accounting</h1>
 					<h2>Accounting for power users</h2>
-					<p><small>
-						<a href="mailto:pfsmorigo@gmail.com" style="color: white">Paulo Flabiano Smorigo</a><br/>
-						<a href="http://twitter.com/pfsmorigo" style="color: white">@pfsmorigo</a>
-					</small></p>
+					<div id="covertext">
+						Paulo Flabiano Smorigo<br />
+						pfsmorigo@{twitter, gmail, github, linkedin, ...}<br />
+						<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
+						v1.0 - Nov 2017
+					</div>
 				</section>
 
 				<section>
@@ -300,9 +309,9 @@ Expenses
 							<li>It's valuable, be accessible for ever</li>
 							<li class="fragment">... even without a specific software</li>
 							<li class="fragment">Easy to edit, search and organize</li>
-							<li class="fragment">... as long as you are good with text editing</li>
-							<li class="fragment">Use your own security method (gpg, ecryptfs), and ...</li>
+							<li class="fragment">... as long as you are good with text editing, and ...</li>
 							<li class="fragment">... you can version-control it! Hello git!</li>
+							<li class="fragment">Use your own security method (gpg, ecryptfs)</li>
 						</ul>
 					</section>
 
@@ -320,8 +329,8 @@ Expenses
 						<h2>Basic</h2>
 						<pre class="ledger">
 &lt;Date&gt; &lt;Description&gt;
-        &lt;Account:Sub-account&gt        &lt;Value&gt;
-        &lt;Account:Sub-account&gt        &lt;Value&gt;</pre>
+        &lt;Account:Sub-account&gt             &lt;Value&gt;
+        &lt;Account:Sub-account&gt             &lt;Value&gt;</pre>
 						<pre class="ledger fragment">
 2017-09-02 Paycheck
         Assets:Checking                    $1000
@@ -445,24 +454,35 @@ Total cost
 					<section>
 						<h2>Ledger-cli syntax</h2>
 						<pre class="ledger">$ ledger [command] [options] [arguments]
-         register  --begin
-         balance   --end
-         print     --period
-         ...       --effective
-         stats     --market
-         xml       --price-db
-         convert   --sort
-         ...       ...
+         register  --file FILE (-f)
+         balance   --begin DATE (-b)
+         print     --end DATE (-e)
+         ...       --period PERIOD (-p)
+         stats     --effective
+         xml       --market (-V)
+         convert   --price-db FILE
+         ...       --sort EXPR (-S)
+                   ...
 						</pre>
-Side note: Ledger will never alter your input file.
+						Ledger will never alter your input file!
 					</section>
 
 					<section>
 						<h2>Common commands</h2>
-						<ul>
-							<li>register: List all postings matching query.</li>
-							<li>balance: Print a balance reports matching query.</li>
-						</ul>
+						<pre class="ledger">$ man ledger
+...
+   balance [report-query]
+      Print a balance report showing totals for postings that
+      match report-query, and aggregate totals for parents of
+      those accounts.
+...
+   register [report-query]
+      List all postings matching the report-query. This is one
+      of the most common commands, and can be used to provide
+      a variety of useful reports.
+...
+						</pre>
+
 					</section>
 
 					<section>
@@ -489,16 +509,12 @@ Side note: Ledger will never alter your input file.
 
 					<section>
 						<h2>Example: register</h2>
-						<pre class="ledger">$ ledger -f examples/ex2.ledger reg
+						<pre class="ledger">$ ledger -f examples/ex2.ledger reg checking
 
-2017-09-02 Paycheck     Assets:Checking      $1000    $1000
-                        Income:Salary       $-1000        0
-2017-09-06 Fuel         Expenses:Auto         $150     $150
-                        Assets:Checking      $-150        0
-2017-09-06 Groceries    Expenses:Market       $150     $150
-                        Assets:Checking      $-150        0
-2017-09-06 Rent         Expenses:House        $500     $500
-                        Assets:Checking      $-500        0
+2017-09-02 Paycheck     Assets:Checking    $1000    $1000
+2017-09-06 Fuel         Assets:Checking    $-150     $850
+2017-09-06 Groceries    Assets:Checking    $-150     $700
+2017-09-06 Rent         Assets:Checking    $-500     $200
 						</pre>
 					</section>
 
@@ -557,7 +573,6 @@ Side note: Ledger will never alter your input file.
 2017-12-10 Groceries    Expenses:Market       $50        0
 						</pre>
 					</section>
-				</section>
 
 					<section>
 						<h2>Scripting</h2>
@@ -565,19 +580,20 @@ Side note: Ledger will never alter your input file.
 							<li>Itau case. Let's go...</li>
 						</ul>
 					</section>
-
 				</section>
 
 				<section>
 					<section>
-						<h2>References</h2>
+						<h2>Links & References</h2>
 						<ul>
 							<li>This presentation<br /><a href="https://github.com/pfsmorigo/reveal.js/tree/pta">https://github.com/pfsmorigo/reveal.js/tree/pta</a></li>
 							<li>Ledger: Command-Line Accounting<br /><a href="http://ledger-cli.org/3.0/doc/ledger3.html">http://ledger-cli.org/3.0/doc/ledger3.html</a></li>
 							<li>Plain Text Accounting<br /><a href="http://plaintextaccounting.org/">http://plaintextaccounting.org/</a></li>
 							<li>Ledger CLI cheatsheet<br /><a href="https://devhints.io/ledger">https://devhints.io/ledger</a></li>
 					</section>
+				</section>
 
+				<section>
 					<section>
 						<h1>The End</h1>
 						<p>Thanks! Questions?</p>
