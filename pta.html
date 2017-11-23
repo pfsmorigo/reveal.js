@@ -227,7 +227,7 @@ Equity
 Liabilities
  └── Credit Card
 Income
- ├── Salary
+ ├── Company
  └── Others
 Expenses
  ├── Auto
@@ -245,7 +245,7 @@ Expenses
                     $150    Auto
                     $500    House
                     $150    Market
-                  $-1000  Income:Salary
+                  $-1000  Income:Company
     --------------------
                        0
 						</pre>
@@ -334,11 +334,11 @@ Expenses
 						<pre class="ledger fragment">
 2017-09-02 Paycheck
         Assets:Checking                    $1000
-        Income:Salary                     $-1000</pre>
+        Income:Company                    $-1000</pre>
 						<pre class="ledger fragment">
 2017-09-02 Paycheck
         Assets:Checking                    $1000
-        Income:Salary</pre>
+        Income:Company</pre>
 						<span class="fragment">Remember: balance to zero!</span>
 					</section>
 
@@ -346,11 +346,11 @@ Expenses
 						<h2>Multiple accounts</h2>
 						<pre class="ledger">
 2017-03-31 Paycheck
-	Assets:Bank:Checking                  $1000
+	Assets:Checking                       $1000
 	Expenses:Taxes:Federal                 $200
 	Expenses:Taxes:Syndicate                $50
 	Expenses:Medical                       $150
-	Income:Salary
+	Income:Company
 						</pre>
 					</section>
 
@@ -359,12 +359,12 @@ Expenses
 						<pre class="ledger">
 2017-09-02 * Paycheck
         Assets:Checking                    $1000
-        Income:Salary
+        Income:Company
 						</pre>
 						<pre class="ledger">
 2017-09-02 ! Paycheck
         Assets:Checking                    $1000
-        Income:Salary
+        Income:Company
 						</pre>
 					</section>
 
@@ -491,7 +491,7 @@ Total cost
 
 2017-09-02 Paycheck
         Assets:Checking                    $1000
-        Income:Salary
+        Income:Company
 
 2017-09-06 Fuel
         Expenses:Auto                       $150
@@ -527,7 +527,7 @@ Total cost
                 $150    Auto
                 $500    House
                 $150    Market
-              $-1000  Income:Salary
+              $-1000  Income:Company
 --------------------
                    0
 						</pre>
@@ -539,7 +539,7 @@ Total cost
 
 2017-09-02 * Paycheck
 	Assets:Checking                    $1000
-	Income:Salary
+	Income:Company
 
 2017-09-06 * Fuel
 	Expenses:Auto                 40 GAS @ $3.75
@@ -562,7 +562,7 @@ Total cost
 						<pre class="ledger">$ ledger --file ex3.ledger --market --effective --sort date reg
 
 2017-09-02 Paycheck     Assets:Checking     $1000    $1000
-                        Income:Salary      $-1000        0
+                        Income:Company     $-1000        0
 2017-09-06 Fuel         Expenses:Auto        $150     $150
                         Assets:Checking     $-150        0
 2017-09-06 Groceries    Assets:Checking     $-150    $-150

@@ -3,7 +3,7 @@ INT COMGAS;Comgas;Expenses:House:Gas
 INT ELETROPAULO;AES Eletropaulo;Expenses:House:Energy
 INT PORTO CONECT;Porto Conecta;Expenses:Phone
 INT TIM CELULAR;TIM Live;Expenses:House:Internet
-REMUNERACAO/SALARIO;Remuneração/Salário;Income:Salary
+REMUNERACAO/SALARIO;Remuneração/Salário;Income:Company
 REND PAGO APLIC AUT MAIS;Rendimento Conta Corrente;Income:Revenue
 RSHOP-CENTER CAST;Center Castilho;Expenses:House
 RSHOP-DROGASIL 03;Drogasil;Expenses:Health
