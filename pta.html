@@ -43,6 +43,15 @@
 				font-size: 14px;
 				font-variant: small-caps;
 			}
+			.reveal .black { color: black; }
+			.reveal .blue { color: blue; }
+			.reveal .brown { color: brown; }
+			.reveal .cyan { color: cyan; }
+			.reveal .gray { color: gray; }
+			.reveal .green { color: green; }
+			.reveal .purple { color: purple; }
+			.reveal .red { color: red; }
+			.reveal .white { color: white; }
 		</style>
 	</head>
 
@@ -56,7 +65,7 @@
 						Paulo Flabiano Smorigo<br />
 						pfsmorigo@{twitter, gmail, github, linkedin, ...}<br />
 						<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
-						v1.0 - Nov 2017
+						v1 - Nov 2017
 					</div>
 				</section>
 
@@ -179,14 +188,14 @@
 						<h2>Double-entry</h2>
 						<pre class="ledger">$ ledger -f examples/ex1.ledger register
 
-    2017-09-02 Paycheck    Bank           $1000    $1000
-                           Company       $-1000        0
-    2017-09-06 Fuel        Fuel            $150     $150
-                           Bank           $-150        0
-    2017-09-06 Groceries   Market          $150     $150
-                           Bank           $-150        0
-    2017-09-06 Rent        House           $500     $500
-                           Bank           $-500        0
+2017-09-02 <span class="white">Paycheck      </span> <span class="blue">Bank         </span>     $1000     $1000
+                          <span class="blue">Company      </span>    <span class="red">$-1000</span>         0
+2017-09-06 <span class="white">Fuel          </span> <span class="blue">Fuel         </span>      $150      $150
+                          <span class="blue">Bank         </span>     <span class="red">$-150</span>         0
+2017-09-06 <span class="white">Groceries     </span> <span class="blue">Market       </span>      $150      $150
+                          <span class="blue">Bank         </span>     <span class="red">$-150</span>         0
+2017-09-06 <span class="white">Rent          </span> <span class="blue">House        </span>      $500      $500
+                          <span class="blue">Bank         </span>     <span class="red">$-500</span>         0
 						</pre>
 					</section>
 
@@ -194,13 +203,13 @@
 						<h2>Must balance to zero</h2>
 						<pre class="ledger">$ ledger -f examples/ex1.ledger balance
 
-                    $200  Bank
-                  $-1000  Company
-                    $150  Fuel
-                    $500  House
-                    $150  Market
-    --------------------
-                       0
+                $200  <span class="blue">Bank</span>
+              <span class="red">$-1000</span>  <span class="blue">Company</span>
+                $150  <span class="blue">Fuel</span>
+                $500  <span class="blue">House</span>
+                $150  <span class="blue">Market</span>
+--------------------
+                   0
 						</pre>
 					</section>
 
@@ -240,14 +249,14 @@ Expenses
 						<h2>Must balance to zero (v2)</h2>
 						<pre class="ledger">$ ledger -f examples/ex2.ledger balance
 
-                    $200  Assets:Checking
-                    $800  Expenses
-                    $150    Auto
-                    $500    House
-                    $150    Market
-                  $-1000  Income:Company
-    --------------------
-                       0
+                $200  <span class="blue">Assets:Checking</span>
+                $800  <span class="blue">Expenses</span>
+                $150    <span class="blue">Auto</span>
+                $500    <span class="blue">House</span>
+                $150    <span class="blue">Market</span>
+              <span class="red">$-1000</span>  <span class="blue">Income:Company</span>
+--------------------
+                   0
 						</pre>
 					</section>
 				</section>
@@ -511,10 +520,10 @@ Total cost
 						<h2>Example: register</h2>
 						<pre class="ledger">$ ledger -f examples/ex2.ledger reg checking
 
-2017-09-02 Paycheck     Assets:Checking    $1000    $1000
-2017-09-06 Fuel         Assets:Checking    $-150     $850
-2017-09-06 Groceries    Assets:Checking    $-150     $700
-2017-09-06 Rent         Assets:Checking    $-500     $200
+2017-09-02 <span class="white">Paycheck      </span> <span class="blue">Asse:Checking</span>     $1000     $1000
+2017-09-06 <span class="white">Fuel          </span> <span class="blue">Asse:Checking</span>     <span class="red">$-150</span>      $850
+2017-09-06 <span class="white">Groceries     </span> <span class="blue">Asse:Checking</span>     <span class="red">$-150</span>      $700
+2017-09-06 <span class="white">Rent          </span> <span class="blue">Asse:Checking</span>     <span class="red">$-500</span>      $200
 						</pre>
 					</section>
 
@@ -522,12 +531,12 @@ Total cost
 						<h2>Example: balance</h2>
 						<pre class="ledger">$ ledger -f examples/ex2.ledger bal
 
-                $200  Assets:Checking
-                $800  Expenses
-                $150    Auto
-                $500    House
-                $150    Market
-              $-1000  Income:Company
+                $200  <span class="blue">Assets:Checking</span>
+                $800  <span class="blue">Expenses</span>
+                $150    <span class="blue">Auto</span>
+                $500    <span class="blue">House</span>
+                $150    <span class="blue">Market</span>
+              <span class="red">$-1000</span>  <span class="blue">Income:Company</span>
 --------------------
                    0
 						</pre>
@@ -561,16 +570,17 @@ Total cost
 						<h2>Another example</h2>
 						<pre class="ledger">$ ledger --file ex3.ledger --market --effective --sort date reg
 
-2017-09-02 Paycheck     Assets:Checking     $1000    $1000
-                        Income:Company     $-1000        0
-2017-09-06 Fuel         Expenses:Auto        $150     $150
-                        Assets:Checking     $-150        0
-2017-09-06 Groceries    Assets:Checking     $-150    $-150
-2017-09-09 Rent         Expenses:House       $500     $350
-                        Assets:Checking     $-500    $-150
-2017-10-10 Groceries    Expenses:Market       $50    $-100
-2017-11-10 Groceries    Expenses:Market       $50     $-50
-2017-12-10 Groceries    Expenses:Market       $50        0
+2017-09-02 Paycheck       <span class="blue">Asse:Checking</span>     $1000     $1000
+                          <span class="blue">Incom:Company</span>    <span class="red">$-1000</span>         0
+2017-09-06 Fuel           <span class="blue">Expenses:Auto</span>      $150      $150
+                          <span class="blue">Asse:Checking</span>     <span class="red">$-150</span>         0
+2017-09-06 <span class="white">Groceries     </span> <span class="blue">Asse:Checking</span>     <span class="red">$-150</span>     <span class="red">$-150</span>
+2017-09-09 <span class="white">Rent          </span> <span class="blue">Expense:House</span>      $500      $350
+                          <span class="blue">Asse:Checking</span>     <span class="red">$-500</span>     <span class="red">$-150</span>
+2017-10-10 <span class="white">Groceries     </span> <span class="blue">Expens:Market</span>       $50     <span class="red">$-100</span>
+2017-11-10 <span class="white">Groceries     </span> <span class="blue">Expens:Market</span>       $50      <span class="red">$-50</span>
+<span class="green">2017-12-10</span> <span class="white">Groceries     </span> <span class="blue">Expens:Market</span>       $50         0
+
 						</pre>
 					</section>
 
